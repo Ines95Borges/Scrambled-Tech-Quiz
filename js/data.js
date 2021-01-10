@@ -1,0 +1,1 @@
+var html5 = ['article', 'div', 'span', 'form', 'section', 'strong', 'pre', 'table', 'main', 'blockquote'];

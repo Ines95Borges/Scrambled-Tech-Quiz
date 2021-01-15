@@ -21,6 +21,8 @@
 
   <main>
 
+    <div id="score">Pontos: <span id="span-score">0</span></div>
+
     <div class="box" id="introduction">
       <h2>Introduction</h2>
       <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus, iusto. Laudantium sint recusandae ullam soluta, ipsum tempore a quae repellendus.</p>
@@ -31,16 +33,26 @@
       <h2>Menu</h2>
 
       <div id="menuContainer">
-        <button id="html5Button">HTML5</button>
-        <button id="css3Button">CSS3</button>
-        <button id="javascriptButton">JAVASCRIPT</button>
-        <button id="sqlButton">SQL</button>
+        <button class="languageButton" id="html5Button">HTML5</button>
+        <button class="languageButton" id="css3Button">CSS3</button>
+        <button class="languageButton" id="javascriptButton">JAVASCRIPT</button>
+        <button class="languageButton" id="sqlButton">SQL</button>
       </div>
 
     </div>
 
     <div class="box hidden" id="gameBox">
+      
+    </div>
 
+    <div class="row">
+      <!-- <span id="dark-mode">Dark mode
+        <label class="switch">
+          <input id="dark-mode-input" type="checkbox">
+          <span class="slider round"></span>
+        </label>
+      </span> -->
+      <button id="goBack">Voltar</button>
     </div>
 
   </main>

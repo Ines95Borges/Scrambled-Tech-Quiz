@@ -8,8 +8,6 @@ $foreground: aqua;
 $navOpacity: 0.7;
 $mainColor: red;
 
-
-
 nav{
   width: 100%;
   height: 60px;
@@ -18,17 +16,20 @@ nav{
   display: flex;
   justify-content: space-around;
   align-items: center;
-}
-
-nav button{
-  width: 30vw;
-  height: 30px;
-  border-radius: 10px;
-  font-size: 1.1rem;
-  font-weight: bolder;
-  background-color: rgba($color: $foreground, $alpha: $navOpacity);
-  color: $mainColor;
-  box-shadow: 0px 10px 20px rgba($color: $mainColor, $alpha: 0.8);
+  margin-bottom: 20px;
+  button{
+    width: 30vw;
+    height: 30px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bolder;
+    background-color: rgba($color: $foreground, $alpha: $navOpacity);
+    color: $mainColor;
+    box-shadow: 0px 10px 20px rgba($color: $mainColor, $alpha: 0.8);
+    &:hover{
+      cursor: pointer;
+    }
+  }
 }
 
 .box{
@@ -42,14 +43,13 @@ nav button{
   padding: 15px;
   margin: auto;
   margin-top: 20px;
-}
-
-.box h2{
-  width: 100%;
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 1.7rem;
-  color: $mainColor;
+  h2{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.7rem;
+    color: $mainColor;
+  }
 }
 
 #menuContainer{
@@ -80,13 +80,101 @@ nav button{
   color: $mainColor;
   font-size: 1.2rem;
   transition: all 0.3s ease-out;
+  &:hover{
+    cursor: crosshair;
+    background-color: $mainColor;
+    font-weight: bolder;
+    color: $foreground;
+    }
 }
 
-.box #menuContainer button:hover{
-  cursor: pointer;
-  background-color: $mainColor;
-  font-weight: bolder;
-  color: $foreground;
+main{
+  #score{
+    display: inline;
+    margin-left: 5%;
+    font-size: 20px;
+    border-bottom: 2px solid $mainColor;
+    span{
+      background-color: $mainColor;
+      font-size: 22px;
+      color: $foreground;
+      border-radius: 5px;
+    }
+  }
+  .row{
+    margin-top: 20px;
+    padding: 5%;
+    button{
+      width: 25vw;
+      height: 35px;
+      border: none;
+      border-radius: 10px;
+      background-color: $mainColor;
+      color: $foreground;
+      cursor: pointer;
+      font-weight: bolder;
+      letter-spacing: 0.3rem;
+    }
+    // #dark-mode{
+    //   display: flex;
+    //   align-items: center;
+    //   .switch {
+    //     position: relative;
+    //     display: inline-block;
+    //     width: 50px;
+    //     height: 25px;
+    //     input {
+    //       opacity: 0;
+    //       width: 0;
+    //       height: 0;
+    //     }
+    //     .slider {
+    //       position: absolute;
+    //       cursor: pointer;
+    //       top: 0;
+    //       left: 0;
+    //       right: 0;
+    //       bottom: 0;
+    //       background-color: rgb(139, 138, 138);
+    //       -webkit-transition: .4s;
+    //       transition: .4s;
+    //     }
+    //     .slider:before {
+    //       position: absolute;
+    //       content: "";
+    //       height: 70%;
+    //       width: 30%;
+    //       left: 4px;
+    //       bottom: 4px;
+    //       background-color: $mainColor;
+    //       -webkit-transition: .4s;
+    //       transition: .4s;
+    //     }
+    //     input:checked + .slider {
+    //       background-color: $foreground;
+    //     }
+        
+    //     input:focus + .slider {
+    //       box-shadow: 0 0 1px #2196F3;
+    //     }
+        
+    //     input:checked + .slider:before {
+    //       -webkit-transform: translateX(26px);
+    //       -ms-transform: translateX(26px);
+    //       transform: translateX(26px);
+    //     }
+        
+    //     /* Rounded sliders */
+    //     .slider.round {
+    //       border-radius: 34px;
+    //     }
+        
+    //     .slider.round:before {
+    //       border-radius: 50%;
+    //     }
+    //   }
+    //}
+  }
 }
 
 .wordBox{
@@ -109,7 +197,12 @@ nav button{
   }
 }
 
-
+@media screen and(min-width:769px){
+  nav button{
+    font-size: 1.5rem;
+    height: 50px;
+  }
+}
 
 
 

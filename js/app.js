@@ -1,87 +1,148 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-  var playButton = document.getElementById("play");
-  var instructionsButton = document.getElementById("instructions");
-  var creditsButton = document.getElementById("credits");
-  var introductionBox = document.getElementById("introduction");
-  var menuBox = document.getElementById("menu");
-  var gameBox = document.getElementById("gameBox");
-  var html5Button = document.getElementById("html5Button");
-  var css3Button = document.getElementById("css3Button");
-  var javascriptButton = document.getElementById("javascriptButton");
-  var sqlButton = document.getElementById("sqlButton");
+  const playButton = document.getElementById("play");
+  const instructionsButton = document.getElementById("instructions");
+  const creditsButton = document.getElementById("credits");
+  const introductionBox = document.getElementById("introduction");
+  const menuBox = document.getElementById("menu");
+  const gameBox = document.getElementById("gameBox");
+  let word = "";
+  let points = 0;
+  let nameTechnology = "";
 
+  // Clicking on the go back button
+  document.getElementById("goBack").addEventListener("click", () => {
+    menuBox.classList.add("hidden");
+    gameBox.classList.add("hidden");
+    introductionBox.classList.remove("hidden");
+    playButton.disabled = false;
+  });
 
   instructionsButton.addEventListener("click", () => {
-    alert("Instructions");
+    alert("O objetivo deste jogo é conseguir fazer o máximo de pontos ordenando as letras de forma a construir elementos das diferentes linguagens.");
   });
 
   creditsButton.addEventListener("click", () => {
-    alert("Credits");
+    alert("Criado por Inês Barata Feio Borges.\nTodos os direitos reservados.");
   });
 
   playButton.addEventListener("click", () => {
     introductionBox.classList.add("hidden");
     menuBox.classList.remove("hidden");
-    playButton.disabled = "true";
-    html5Button.addEventListener("click", () => {
-      menuBox.classList.add("hidden");
-      var game = new Game();
-      game.displayBox();
-      // Append a child h3 element refering to the technology
-      var nameTechnology = document.createElement("h3");
-      nameTechnology.innerHTML = "HTML5";
-      gameBox.appendChild(nameTechnology);
+    playButton.disabled = true;
 
-      game.gameInteraction();
+    const languagesButtons = document.getElementsByClassName("languageButton");
+    [...languagesButtons].forEach(button => {
+      button.addEventListener("click", (e) => {
+        menuBox.classList.add("hidden");
+        const game = new Game();
+        game.displayBox();
+        // Append a child h3 element refering to the technology
+        nameTechnology = document.createElement("h3");
+        
+        nameTechnology.innerHTML = e.target.innerHTML;
+        gameBox.appendChild(nameTechnology);
+
+        game.gameInteraction();
+        const interval = setInterval(() => {
+          const letterDivs = document.querySelectorAll('.wordBox > *');
+          const letterDivsSorted = [...letterDivs].sort((a, b) => {
+            const aNum = parseInt(a.style.order, 10);
+            const bNum = parseInt(b.style.order, 10);
+
+            if(Number.isNaN(aNum)) return 1;
+            if(Number.isNaN(bNum)) return -1;
+
+            return aNum - bNum;
+          })
+          const currentWord = letterDivsSorted.map(el => el.textContent).join("");
+          if (currentWord == word) {
+            points++;
+            document.getElementById("span-score").innerHTML = String(points);
+            game.gameInteraction();
+          }
+        }, 500);
+      })
     })
   });
 
-  var Game = class Game{
+  const Game = class Game{
     displayBox(){
       gameBox.classList.remove("hidden");
     }
-    choseWord(){ // Returns one random word
-      var len = html5.length;
-      var wordIndex = Math.floor(Math.random() * len);
-      return html5[wordIndex];
+    choseWord(){ // Returns one random word and chooses the array
+      if(nameTechnology.innerHTML === "HTML5"){
+        const len = html5.length;
+        const wordIndex = Math.floor(Math.random() * len);
+        return html5[wordIndex];
+      }else if(nameTechnology.innerHTML === "CSS3"){
+        const len = css3.length;
+        const wordIndex = Math.floor(Math.random() * len);
+        return css3[wordIndex];
+      }else if(nameTechnology.innerHTML === "JAVASCRIPT"){
+        const len = javascript.length;
+        const wordIndex = Math.floor(Math.random() * len);
+        return javascript[wordIndex];
+      }else if(nameTechnology.innerHTML === "SQL"){
+        const len = sql.length;
+        const wordIndex = Math.floor(Math.random() * len);
+        return sql[wordIndex];
+      }
     }
     gameMechanics(){
-      var word = this.choseWord(); // Gets the word chosen
-      var lenWord = word.length; // Gets the length of the word chosen
-      var wordBox = document.createElement("div"); // Creates a div that contain the word
-      wordBox.classList.add("wordBox");
-      for(var i = 0; i < lenWord; i++){
-        var letter = document.createElement("div"); // Creates a div that contains the letters
+
+      word = this.choseWord(); // Gets the word chosen
+      const lenWord = word.length; // Gets the length of the word chosen
+      let wordBox; // Makes it accessible inside this scope
+      if(!document.contains(document.getElementsByClassName("wordBox")[0])){ // Creates a container for the first time
+        wordBox = document.createElement("div"); // Creates a div that contain the word
+        wordBox.classList.add("wordBox");
+      }
+      if(document.contains(document.getElementsByClassName("wordBox")[0])){ // Eliminates the word from the container on the next play
+        document.getElementsByClassName("wordBox")[0].remove(); // Removes the container
+        wordBox = document.createElement("div"); // Creates a div that contain the word
+        wordBox.classList.add("wordBox");
+      }
+      for(let i = 0; i < lenWord; i++){
+        const letter = document.createElement("div"); // Creates a div that contains the letters
         letter.innerHTML = word[i]; // Appends the letter to the div
         wordBox.appendChild(letter); // Appends the div to its parent
       }
       gameBox.appendChild(wordBox); // Appends the div to the gameBox
-      var lettersArray = document.querySelector(".wordBox").querySelectorAll("div"); // Gets an array of letters
+      const lettersArray = document.querySelector(".wordBox").querySelectorAll("div"); // Gets an array of letters
+      var arrayRandomNumbers = [];
       lettersArray.forEach((div) => {
-        div.style.order = Math.floor(Math.random() * lenWord); // Switches the order of the letters
+        var randomNumber = Math.floor(Math.random() * lenWord+1); // Generates a random number
+        while(arrayRandomNumbers.includes(randomNumber)){ // Checks if a random numeber is in the array
+          randomNumber = Math.floor(Math.random() * lenWord+1); // If it is in generates another random number until it is not in
+        }
+        arrayRandomNumbers.push(randomNumber);
+        div.style.order = randomNumber; // Switches the order of the letters
       });
       return [lettersArray, word];
     }
     gameInteraction(){
-      var turn = 0;
-      var gameMechanics = this.gameMechanics();
-      var letters = gameMechanics[0];
-      var word = gameMechanics[1];
+      let turn = 0;
+      const gameMechanics = this.gameMechanics();
+      const letters = gameMechanics[0];
+      word = gameMechanics[1];
+      let lettertoSwitch = 0; // To be in the scope of the function
+      let letterToBeSwitchedWith = 0;
+      let indexLettertoSwitch = 0;
       letters.forEach((letter) => {
         letter.addEventListener("click", (e) => {
-          if(turn % 2 === 0){
-            var indexLetterToSwitch = word.indexOf(letter.innerHTML);
+          if(turn % 2 === 0){ // If its the first time the user clicks on the letter
+            lettertoSwitch = letter.style.order; // Stores the position of the letter
+            indexLettertoSwitch = word.indexOf(letter.innerHTML); // Stores the index of the letter
             turn ++;
-          }else if(turn % 2 === 0){
-            var indexLetterToBeSwitchedWith = word.indexOf(letter.innerHTML);
+          }else if(turn % 2 === 1){ // If its the second time the user clicks on a letter
+            letterToBeSwitchedWith = letter.style.order; // Stores the position of the letter
             turn ++;
-            var temp = indexLetterToSwitch;
-            word[indexLetterToSwitch] = word[indexLetterToBeSwitchedWith];
-            word[indexLetterToBeSwitchedWith] = temp;
+            
           }
-          if(turn % 2 == 0 && turn !== 0){
-
+          if(turn % 2 == 0 && turn !== 0){ // If the player has made to moves and its not the first turn
+            letter.style.order = lettertoSwitch; // Switches the current letter with the first one clicked
+            letters[indexLettertoSwitch].style.order = letterToBeSwitchedWith; // Switches the second clicked letter with first one clicked
           }
         })
       })

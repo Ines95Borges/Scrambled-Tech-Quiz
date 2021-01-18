@@ -1,8 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&display=swap");
 * {
   margin: 0;
   padding: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  background-image: url("../images/background-image.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: black;
+  mix-blend-mode: multiply;
+  font-family: "Josefin Sans", "Times New Roman", sans-serif;
 }
 
 nav {

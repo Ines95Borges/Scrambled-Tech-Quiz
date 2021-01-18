@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   instructionsButton.addEventListener("click", () => {
-    alert("O objetivo deste jogo é conseguir fazer o máximo de pontos ordenando as letras de forma a construir elementos das diferentes linguagens.");
+    alert("The goal of this game is to get the maximum score possible by ordering the letter to name properties, elements, functions and keywords of the different languages.");
   });
 
   creditsButton.addEventListener("click", () => {
@@ -39,27 +39,27 @@ document.addEventListener('DOMContentLoaded', () => {
         game.displayBox();
         // Append a child h3 element refering to the technology
         nameTechnology = document.createElement("h3");
-        
-        nameTechnology.innerHTML = e.target.innerHTML;
+        nameTechnology.innerHTML = e.target.innerHTML; // Gets the name of the technology selected
+        [...gameBox.getElementsByTagName("h3")].forEach(h3 => h3.remove()); // Removes the previous h3 childnodes
         gameBox.appendChild(nameTechnology);
 
         game.gameInteraction();
         const interval = setInterval(() => {
           const letterDivs = document.querySelectorAll('.wordBox > *');
           const letterDivsSorted = [...letterDivs].sort((a, b) => {
-            const aNum = parseInt(a.style.order, 10);
-            const bNum = parseInt(b.style.order, 10);
+            const aNum = parseInt(a.style.order, 10); // Converts the string into a number
+            const bNum = parseInt(b.style.order, 10); // Converts the string into a number
 
-            if(Number.isNaN(aNum)) return 1;
-            if(Number.isNaN(bNum)) return -1;
+            if(Number.isNaN(aNum)) return 1; // If it is not a number
+            if(Number.isNaN(bNum)) return -1; // If it is not a number
 
-            return aNum - bNum;
+            return aNum - bNum; // Orders the array
           })
-          const currentWord = letterDivsSorted.map(el => el.textContent).join("");
-          if (currentWord == word) {
-            points++;
-            document.getElementById("span-score").innerHTML = String(points);
-            game.gameInteraction();
+          const currentWord = letterDivsSorted.map(el => el.textContent).join(""); // Joins the letters to form a word
+          if (currentWord == word) { // If the user got the word right
+            points++; // Increments points by one
+            document.getElementById("span-score").innerHTML = String(points); // Sets the points in the element
+            game.gameInteraction(); // Begins another game
           }
         }, 500);
       })
@@ -71,9 +71,9 @@ document.addEventListener('DOMContentLoaded', () => {
       gameBox.classList.remove("hidden");
     }
     choseWord(){ // Returns one random word and chooses the array
-      if(nameTechnology.innerHTML === "HTML5"){
-        const len = html5.length;
-        const wordIndex = Math.floor(Math.random() * len);
+      if(nameTechnology.innerHTML === "HTML5"){ // If the technology choosen
+        const len = html5.length; // Gets the lenght of the array
+        const wordIndex = Math.floor(Math.random() * len); // Selects a random word from the array
         return html5[wordIndex];
       }else if(nameTechnology.innerHTML === "CSS3"){
         const len = css3.length;
@@ -87,6 +87,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const len = sql.length;
         const wordIndex = Math.floor(Math.random() * len);
         return sql[wordIndex];
+      }else if(nameTechnology.innerHTML === "PHP"){
+        const len = php.length;
+        const wordIndex = Math.floor(Math.random() * len);
+        return php[wordIndex];
+      }else if(nameTechnology.innerHTML === "JAVA"){
+        const len = java.length;
+        const wordIndex = Math.floor(Math.random() * len);
+        return java[wordIndex];
+      }else if(nameTechnology.innerHTML === "PYTHON"){
+        const len = python.length;
+        const wordIndex = Math.floor(Math.random() * len);
+        return python[wordIndex];
       }
     }
     gameMechanics(){
@@ -133,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
         letter.addEventListener("click", (e) => {
           if(turn % 2 === 0){ // If its the first time the user clicks on the letter
             lettertoSwitch = letter.style.order; // Stores the position of the letter
+            console.log(letter);
             indexLettertoSwitch = word.indexOf(letter.innerHTML); // Stores the index of the letter
             turn ++;
           }else if(turn % 2 === 1){ // If its the second time the user clicks on a letter
@@ -143,6 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if(turn % 2 == 0 && turn !== 0){ // If the player has made to moves and its not the first turn
             letter.style.order = lettertoSwitch; // Switches the current letter with the first one clicked
             letters[indexLettertoSwitch].style.order = letterToBeSwitchedWith; // Switches the second clicked letter with first one clicked
+            console.log(lettertoSwitch, letterToBeSwitchedWith);
           }
         })
       })

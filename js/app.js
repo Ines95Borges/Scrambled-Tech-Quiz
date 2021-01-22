@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   creditsButton.addEventListener("click", () => {
-    alert("Criado por Inês Barata Feio Borges.\nTodos os direitos reservados.");
+    alert("Created by Inês Barata Feio Borges.\nAll rights reserved.");
   });
 
   playButton.addEventListener("click", () => {
@@ -118,6 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
       for(let i = 0; i < lenWord; i++){
         const letter = document.createElement("div"); // Creates a div that contains the letters
         letter.innerHTML = word[i]; // Appends the letter to the div
+        letter.id = i;
         wordBox.appendChild(letter); // Appends the div to its parent
       }
       gameBox.appendChild(wordBox); // Appends the div to the gameBox
@@ -145,8 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
         letter.addEventListener("click", (e) => {
           if(turn % 2 === 0){ // If its the first time the user clicks on the letter
             lettertoSwitch = letter.style.order; // Stores the position of the letter
-            console.log(letter);
-            indexLettertoSwitch = word.indexOf(letter.innerHTML); // Stores the index of the letter
+            indexLettertoSwitch = letter.id; // Saves the position of the letter in the word
             turn ++;
           }else if(turn % 2 === 1){ // If its the second time the user clicks on a letter
             letterToBeSwitchedWith = letter.style.order; // Stores the position of the letter
@@ -156,7 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
           if(turn % 2 == 0 && turn !== 0){ // If the player has made to moves and its not the first turn
             letter.style.order = lettertoSwitch; // Switches the current letter with the first one clicked
             letters[indexLettertoSwitch].style.order = letterToBeSwitchedWith; // Switches the second clicked letter with first one clicked
-            console.log(lettertoSwitch, letterToBeSwitchedWith);
           }
         })
       })

@@ -12,8 +12,9 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-color: black;
-  mix-blend-mode: multiply;
+  mix-blend-mode: normal;
   font-family: "Josefin Sans", "Times New Roman", sans-serif;
+  overflow: hidden;
 }
 
 nav {
@@ -79,7 +80,7 @@ nav button:hover {
 #menuContainer {
   height: 600px;
   max-height: 40vh;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 #menuContainer::-webkit-scrollbar-track {
@@ -178,6 +179,21 @@ main .row button {
   nav button {
     font-size: 1.5rem;
     height: 50px;
+  }
+  .wordBox div {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    width: 50px;
+    height: 50px;
+    font-size: 22px;
+    border: 3px solid aqua;
   }
 }
 

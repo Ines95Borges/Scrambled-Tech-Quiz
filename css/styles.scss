@@ -17,8 +17,9 @@ body{
   background-repeat: no-repeat;
   background-size: cover;
   background-color: black;
-  mix-blend-mode: multiply;
+  mix-blend-mode: normal;
   font-family: "Josefin Sans", "Times New Roman", sans-serif;
+  overflow: hidden;
 }
 
 nav{
@@ -68,7 +69,7 @@ nav{
 #menuContainer{
   height: 600px;
   max-height: 40vh;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 // Styling the scrollbar
@@ -155,6 +156,15 @@ main{
   nav button{
     font-size: 1.5rem;
     height: 50px;
+  }
+  .wordBox div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    font-size: 22px;
+    border: 3px solid $foreground;
   }
 }
 

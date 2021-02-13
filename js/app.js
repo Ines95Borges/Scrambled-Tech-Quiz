@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const introductionBox = document.getElementById("introduction");
   const menuBox = document.getElementById("menu");
   const gameBox = document.getElementById("gameBox");
+  const hintButton = document.getElementById("hintButton");
   let word = "";
   let points = 0;
   let nameTechnology = "";
@@ -62,6 +63,15 @@ document.addEventListener('DOMContentLoaded', () => {
             game.gameInteraction(); // Begins another game
           }
         }, 500);
+
+        hintButton.addEventListener("click", () => {
+          document.getElementById("span-score").innerHTML = String(--points); // Subtracts one to the score
+          const lettersArray = document.querySelector(".wordBox").querySelectorAll("div"); // Gets an array of letters
+          const lettersNotOrdered = [...lettersArray].filter((letter => letter.id != letter.style.order)); // Gets an array of all the letters that are not positioned correctly
+          // const indexLetterToSwitch = lettersNotOrdered[0].style.order;
+          lettersNotOrdered[0].style.order = lettersNotOrdered[0].id
+        });
+
       })
     })
   });
@@ -118,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
       for(let i = 0; i < lenWord; i++){
         const letter = document.createElement("div"); // Creates a div that contains the letters
         letter.innerHTML = word[i]; // Appends the letter to the div
-        letter.id = i;
+        letter.id = i+1;
         wordBox.appendChild(letter); // Appends the div to its parent
       }
       gameBox.appendChild(wordBox); // Appends the div to the gameBox
@@ -155,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           if(turn % 2 == 0 && turn !== 0){ // If the player has made to moves and its not the first turn
             letter.style.order = lettertoSwitch; // Switches the current letter with the first one clicked
-            letters[indexLettertoSwitch].style.order = letterToBeSwitchedWith; // Switches the second clicked letter with first one clicked
+            letters[indexLettertoSwitch-1].style.order = letterToBeSwitchedWith; // Switches the second clicked letter with first one clicked
           }
         })
       })

@@ -150,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
       letters.forEach((letter) => {
         letter.addEventListener("click", (e) => {
           if(turn % 2 === 0){ // If its the first time the user clicks on the letter
+            letter.style.backgroundColor = "#feca1d";
             lettertoSwitch = letter.style.order; // Stores the position of the letter
             indexLettertoSwitch = letter.id; // Saves the position of the letter in the word
             turn ++;
@@ -161,6 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if(turn % 2 == 0 && turn !== 0){ // If the player has made to moves and its not the first turn
             letter.style.order = lettertoSwitch; // Switches the current letter with the first one clicked
             letters[indexLettertoSwitch].style.order = letterToBeSwitchedWith; // Switches the second clicked letter with first one clicked
+            letters[indexLettertoSwitch].style.backgroundColor = "transparent";
           }
         })
       })

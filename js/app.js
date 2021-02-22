@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (currentWord == word) { // If the user got the word right
             points++; // Increments points by one
             document.getElementById("span-score").innerHTML = String(points); // Sets the points in the element
+            setTimeout(function(){return null}, 1000);
             game.gameInteraction(); // Begins another game
           }
         }, 500);

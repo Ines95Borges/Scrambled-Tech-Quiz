@@ -13,7 +13,7 @@ $mainColor: red;
 
 body{
   height: 100vh;
-  background-image: url("../images/background-image.jpg");
+  background-image: url("./../../images/background-image.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-color: black;
@@ -118,6 +118,8 @@ main{
   .row{
     margin-top: 20px;
     padding: 5%;
+    display: flex;
+    justify-content: space-between;
     button{
       width: 25vw;
       height: 35px;
@@ -146,6 +148,7 @@ main{
     text-align: center;
     vertical-align: middle;
     font-size: 1.3rem;
+    cursor: pointer;
   }
   div:not(:last-child){
     margin-right: 5px;

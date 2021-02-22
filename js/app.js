@@ -35,11 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const languagesButtons = document.getElementsByClassName("languageButton");
     [...languagesButtons].forEach(button => {
       button.addEventListener("click", (e) => {
-        const hintButton = document.querySelector("#hintButton");
-        hintButton.addEventListener("click", () => {
-          points--;
-          document.getElementById("span-score").innerHTML = String(points);
-        });
         menuBox.classList.add("hidden");
         const game = new Game();
         game.displayBox();

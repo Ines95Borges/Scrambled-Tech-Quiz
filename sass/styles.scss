@@ -103,16 +103,26 @@ nav{
 }
 
 main{
-  #score{
-    display: inline;
-    margin-left: 5%;
-    font-size: 20px;
-    border-bottom: 2px solid $mainColor;
-    span{
-      background-color: $mainColor;
-      font-size: 22px;
-      color: $foreground;
-      border-radius: 5px;
+  #score-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 5%;
+    #score{
+      display: inline;
+      margin-left: 5%;
+      font-size: 20px;
+      border-bottom: 2px solid $mainColor;
+      span{
+        background-color: $mainColor;
+        font-size: 22px;
+        color: $foreground;
+        border-radius: 5px;
+      }
+    }
+    #time-counter{
+      font-size: 20px;
+      cursor: pointer;
     }
   }
   .row{

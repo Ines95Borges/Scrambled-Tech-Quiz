@@ -13,7 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
   
   let minutes = 0;
   let seconds = 0;
+  let toCountTime = true;
   const timeCounter = document.querySelector("#time-counter");
+  
   function time(){
     seconds++;
     if(seconds === 60){
@@ -56,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   instructionsButton.addEventListener("click", () => {
-    alert("The goal of this game is to get the maximum score possible by ordering the letter to name properties, elements, functions and keywords of the different languages.");
+    alert("The goal of this game is to get the maximum score possible by ordering the letter to name properties, elements, functions and keywords of the different languages. If you click on the time counter the clock will either stop or continue.");
   });
 
   creditsButton.addEventListener("click", () => {
@@ -71,11 +73,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const languagesButtons = document.getElementsByClassName("languageButton");
     [...languagesButtons].forEach(button => {
       button.addEventListener("click", (e) => {
+
+        timeCounter.addEventListener("click", () => {
+          if(toCountTime){
+            clearInterval(clock);
+            toCountTime = false;
+          }else{
+            clock = setInterval(time, 1000);
+          }
+        });
+
         menuBox.classList.add("hidden");
         const game = new Game();
         game.displayBox();
         // Start the clock
-        clock = setInterval(time, 1000);
+        if(toCountTime){
+          clock = setInterval(time, 1000);
+        }
         // Append a child h3 element refering to the technology
         nameTechnology = document.createElement("h3");
         nameTechnology.innerHTML = e.target.innerHTML; // Gets the name of the technology selected

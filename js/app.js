@@ -11,6 +11,38 @@ document.addEventListener('DOMContentLoaded', () => {
   let hintArray = [];
   hintBox.classList.add("hintBox");
   
+  let minutes = 0;
+  let seconds = 0;
+  const timeCounter = document.querySelector("#time-counter");
+  function time(){
+    seconds++;
+    if(seconds === 60){
+      minutes++;
+      seconds = 0;
+    }
+    if(seconds === 60){
+      if(minutes < 10){
+        timeCounter.innerHTML = `0${minutes}:00`;
+      }else{
+        timeCounter.innerHTML = `${minutes}:00`;
+      }
+    }else if(seconds < 10){
+      if(minutes < 10){
+        timeCounter.innerHTML = `0${minutes}:0${seconds}`;
+      }else{
+        timeCounter.innerHTML = `${minutes}:0${seconds}`;
+      }
+    }else{
+      if(minutes < 10){
+        timeCounter.innerHTML = `0${minutes}:${seconds}`;
+      }else{
+        timeCounter.innerHTML = `${minutes}:${seconds}`;
+      }
+    }
+  }
+
+  var clock;
+
   let word = "";
   let points = 0;
   let nameTechnology = "";
@@ -42,6 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
         menuBox.classList.add("hidden");
         const game = new Game();
         game.displayBox();
+        // Start the clock
+        clock = setInterval(time, 1000);
         // Append a child h3 element refering to the technology
         nameTechnology = document.createElement("h3");
         nameTechnology.innerHTML = e.target.innerHTML; // Gets the name of the technology selected

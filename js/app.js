@@ -73,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
           document.getElementById("span-score").innerHTML = String(--points); // Subtracts one to the score
           const letterDivs = document.querySelectorAll('.wordBox > *');
           if(hintBox.innerHTML === ""){
+            hintArray = [];
             for(var i=0; i< word.length; i++){
               var div = document.createElement("div");
               hintBox.appendChild(div);

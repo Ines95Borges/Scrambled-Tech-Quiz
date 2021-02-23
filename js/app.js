@@ -14,14 +14,18 @@ document.addEventListener('DOMContentLoaded', () => {
   let minutes = 0;
   let seconds = 0;
   let toCountTime = true;
+  let isFirstTimeCounting = true;
   const timeCounter = document.querySelector("#time-counter");
   
   function time(){
-    seconds++;
-    if(seconds === 60){
-      minutes++;
-      seconds = 0;
+    if(toCountTime){
+      seconds++;
+      if(seconds === 60){
+        minutes++;
+        seconds = 0;
+      }
     }
+    
     if(seconds === 60){
       if(minutes < 10){
         timeCounter.innerHTML = `0${minutes}:00`;
@@ -74,22 +78,15 @@ document.addEventListener('DOMContentLoaded', () => {
     [...languagesButtons].forEach(button => {
       button.addEventListener("click", (e) => {
 
-        timeCounter.addEventListener("click", () => {
-          if(toCountTime){
-            clearInterval(clock);
-            toCountTime = false;
-          }else{
-            clock = setInterval(time, 1000);
-          }
-        });
+        if(isFirstTimeCounting) {
+          clock = setInterval(time, 1000);
+          timeCounter.addEventListener("click", () => toCountTime = !toCountTime);
+          isFirstTimeCounting = false;
+        }
 
         menuBox.classList.add("hidden");
         const game = new Game();
         game.displayBox();
-        // Start the clock
-        if(toCountTime){
-          clock = setInterval(time, 1000);
-        }
         // Append a child h3 element refering to the technology
         nameTechnology = document.createElement("h3");
         nameTechnology.innerHTML = e.target.innerHTML; // Gets the name of the technology selected

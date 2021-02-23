@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const menuBox = document.getElementById("menu");
   const gameBox = document.getElementById("gameBox");
   const hintButton = document.getElementById("hintButton");
+  let hintBox = document.createElement("div");;
+  let hintArray = [];
+  hintBox.classList.add("hintBox");
+  
   let word = "";
   let points = 0;
   let nameTechnology = "";
@@ -60,16 +64,48 @@ document.addEventListener('DOMContentLoaded', () => {
           if (currentWord == word) { // If the user got the word right
             points++; // Increments points by one
             document.getElementById("span-score").innerHTML = String(points); // Sets the points in the element
+            hintBox.innerHTML = "";
             game.gameInteraction(); // Begins another game
           }
         }, 500);
 
         hintButton.addEventListener("click", () => {
           document.getElementById("span-score").innerHTML = String(--points); // Subtracts one to the score
-          const lettersArray = document.querySelector(".wordBox").querySelectorAll("div"); // Gets an array of letters
-          const lettersNotOrdered = [...lettersArray].filter((letter => letter.id != letter.style.order)); // Gets an array of all the letters that are not positioned correctly
-          // const indexLetterToSwitch = lettersNotOrdered[0].style.order;
-          lettersNotOrdered[0].style.order = lettersNotOrdered[0].id
+          const letterDivs = document.querySelectorAll('.wordBox > *');
+          if(hintBox.innerHTML === ""){
+            for(var i=0; i< word.length; i++){
+              var div = document.createElement("div");
+              hintBox.appendChild(div);
+            }
+            var randomNumber = Math.floor(Math.random() * letterDivs.length+1);
+            hintArray.push(randomNumber);
+            var hintDivs = hintBox.childNodes;
+            letterDivs.forEach(letter => {
+              if(hintArray.includes(parseInt((letter.id), 10))){
+                [...hintDivs][letter.id-1].innerHTML = [...letterDivs][letter.id-1].innerHTML;
+              }else{
+                [...hintDivs][letter.id-1].innerHTML = "_";
+              }
+            });
+            gameBox.appendChild(hintBox);
+          }else{
+            if(hintArray.length != word.length){ // this is to prevent from entering into an infinite loop when all the letters have been generated
+              var randomNumber = Math.floor(Math.random() * letterDivs.length+1);
+              while(hintArray.includes(randomNumber)){ // Prevents from having repeated random numbers
+                var randomNumber = Math.floor(Math.random() * letterDivs.length+1);
+              }
+              hintArray.push(randomNumber)
+            }
+            var hintDivs = hintBox.childNodes;
+            letterDivs.forEach(letter => {
+              if(hintArray.includes(parseInt((letter.id), 10))){
+                [...hintDivs][letter.id-1].innerHTML = [...letterDivs][letter.id-1].innerHTML;
+              }else{
+                [...hintDivs][letter.id-1].innerHTML = "_";
+              }
+            });
+            gameBox.appendChild(hintBox);
+          }
         });
 
       })

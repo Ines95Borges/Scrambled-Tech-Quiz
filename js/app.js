@@ -73,11 +73,13 @@ document.addEventListener('DOMContentLoaded', () => {
     introductionBox.classList.add("hidden");
     menuBox.classList.remove("hidden");
     playButton.disabled = true;
+    
 
     const languagesButtons = document.getElementsByClassName("languageButton");
     [...languagesButtons].forEach(button => {
       button.addEventListener("click", (e) => {
-
+        const game = new Game();
+        game.removeHintButtonFunctionality();
         if(isFirstTimeCounting) {
           clock = setInterval(time, 1000);
           timeCounter.addEventListener("click", () => toCountTime = !toCountTime);
@@ -85,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         menuBox.classList.add("hidden");
-        const game = new Game();
         game.displayBox();
         // Append a child h3 element refering to the technology
         nameTechnology = document.createElement("h3");
@@ -114,46 +115,10 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }, 500);
 
-        hintButton.addEventListener("click", () => {
-          document.getElementById("span-score").innerHTML = String(--points); // Subtracts one to the score
-          const letterDivs = document.querySelectorAll('.wordBox > *');
-          if(hintBox.innerHTML === ""){
-            hintArray = [];
-            for(var i=0; i< word.length; i++){
-              var div = document.createElement("div");
-              hintBox.appendChild(div);
-            }
-            var randomNumber = Math.floor(Math.random() * letterDivs.length+1);
-            hintArray.push(randomNumber);
-            var hintDivs = hintBox.childNodes;
-            letterDivs.forEach(letter => {
-              if(hintArray.includes(parseInt((letter.id), 10))){
-                [...hintDivs][letter.id-1].innerHTML = [...letterDivs][letter.id-1].innerHTML;
-              }else{
-                [...hintDivs][letter.id-1].innerHTML = "_";
-              }
-            });
-            gameBox.appendChild(hintBox);
-          }else{
-            if(hintArray.length != word.length){ // this is to prevent from entering into an infinite loop when all the letters have been generated
-              var randomNumber = Math.floor(Math.random() * letterDivs.length+1);
-              while(hintArray.includes(randomNumber)){ // Prevents from having repeated random numbers
-                var randomNumber = Math.floor(Math.random() * letterDivs.length+1);
-              }
-              hintArray.push(randomNumber)
-            }
-            var hintDivs = hintBox.childNodes;
-            letterDivs.forEach(letter => {
-              if(hintArray.includes(parseInt((letter.id), 10))){
-                [...hintDivs][letter.id-1].innerHTML = [...letterDivs][letter.id-1].innerHTML;
-              }else{
-                [...hintDivs][letter.id-1].innerHTML = "_";
-              }
-            });
-            gameBox.appendChild(hintBox);
-          }
-        });
 
+        hintButton.addEventListener("click", game.hintButtonFunctionality, false);
+          
+        
       })
     })
   });
@@ -254,6 +219,48 @@ document.addEventListener('DOMContentLoaded', () => {
         })
       })
     }
+    hintButtonFunctionality(){
+      document.getElementById("span-score").innerHTML = String(--points); // Subtracts one to the score
+      const letterDivs = document.querySelectorAll('.wordBox > *');
+      if(hintBox.innerHTML === ""){
+        hintArray = [];
+        for(var i=0; i< word.length; i++){
+          var div = document.createElement("div");
+          hintBox.appendChild(div);
+        }
+        var randomNumber = Math.floor(Math.random() * letterDivs.length+1);
+        hintArray.push(randomNumber);
+        var hintDivs = hintBox.childNodes;
+        letterDivs.forEach(letter => {
+          if(hintArray.includes(parseInt((letter.id), 10))){
+            [...hintDivs][letter.id-1].innerHTML = [...letterDivs][letter.id-1].innerHTML;
+          }else{
+            [...hintDivs][letter.id-1].innerHTML = "_";
+          }
+        });
+        gameBox.appendChild(hintBox);
+      }else{
+        if(hintArray.length != word.length){ // this is to prevent from entering into an infinite loop when all the letters have been generated
+          var randomNumber = Math.floor(Math.random() * letterDivs.length+1);
+          while(hintArray.includes(randomNumber)){ // Prevents from having repeated random numbers
+            var randomNumber = Math.floor(Math.random() * letterDivs.length+1);
+          }
+          hintArray.push(randomNumber)
+        }
+        var hintDivs = hintBox.childNodes;
+        letterDivs.forEach(letter => {
+          if(hintArray.includes(parseInt((letter.id), 10))){
+            [...hintDivs][letter.id-1].innerHTML = [...letterDivs][letter.id-1].innerHTML;
+          }else{
+            [...hintDivs][letter.id-1].innerHTML = "_";
+          }
+        });
+        gameBox.appendChild(hintBox);
+      }
+    }
+    removeHintButtonFunctionality(){
+      hintBox.innerHTML="";
+      hintButton.removeEventListener("click", this.hintButtonFunctionality);
+    }
   }
-
 });
